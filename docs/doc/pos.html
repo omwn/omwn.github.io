@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	  crossorigin="anonymous">
+    
+  <link href="../static/css/home.css" rel="stylesheet">
+
+</head>
+
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"><img width=50
+					   src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+	      
+	      <a href="../index.html"
+		 class="nav-item nav-link">Overview</a>
+	      
+	      <a href="../omw1.html"
+		 class="nav-item nav-link">OMW v1</a>
+	      
+	      <a href="../omw2.html"
+		 class="nav-item nav-link">OMW v2</a>
+	      
+	      <a href="../news.html"
+		 class="nav-item nav-link">News</a>
+	      
+	      <a href="../docs.html"
+		 class="nav-item nav-link">Documentation</a>
+	      
+	    </div>
+	</div>
+      </div>
+  </nav>
+</header>
+  <div class="column">
+
+    <div class="container">
+        <h1>Wordnet Topics</h1>
+
+	<p>This page provides documentation for the parts-of-speech.
+
+  <table class="table table-hover table-borderless table-sm">
+    <caption>Parts of Speech</caption>
+    <thead class="thead-light">
+    <tr>
+      <th>POS</th> <th>Name</th> <th>Extra</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>n</th>
+      <td>noun </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>v</th>
+      <td>verb </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>a</th>
+      <td>adjective </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>r</th>
+      <td>adverb </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>s</th>
+      <td>adjective satellite </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>c</th>
+      <td>conjunction </td>
+      <td> </td>
+    </tr>
+    
+    <tr>
+      <th>p</th>
+      <td>adposition </td>
+      <td>preposition, postposition, etc. </td>
+    </tr>
+    
+    <tr>
+      <th>x</th>
+      <td>non-referential </td>
+      <td>particle, classifier, exclamative, etc. </td>
+    </tr>
+    
+    <tr>
+      <th>u</th>
+      <td>unknown </td>
+      <td> </td>
+    </tr>
+    
+    </tbody>
+    </table>
+
+<p>Princeton WordNet defines the original four open class parts of
+  speech: either noun, verb, adjective, or adverb. It later added
+  satellite adjectives, which are in clusters representing a concept that is
+  similar in meaning to the concept represented by its head synset.
+  OMW maps them internally to adjectives.
+
+<p>Conjunctions and adpositions are reserved for extending to new
+  semi-open classes.
+
+<p><strong>x</strong> is used for non-referential words such as
+  particles, classifiers, exclamatives, greetings, determiners and so forth.
+
+<p><strong>z</strong> is used for phrases, for example to
+  represent <i>phrasets</i>, introduced by <a href='Beyond Lexical
+  Units: Enriching Wordnets with Phrasets'>Luisa Bentivogli and
+    Emanuele Pianta (2003)</a>.
+  <br><strong>DEPRECATED</strong> better to
+  use <strong>lexicalized</strong> instead.
+  
+<p><strong>u</strong> Is for automatically produced wordnets that want
+  to add words for which they are not sure of the part-of-speech.
+
+  <h4>Non-lexicalized Synsets and Senses</h4>
+  
+<p>We have an optional attribute <code>lexicalized</code>
+on the synset and sense types, with a boolean value, defaulting to
+true. This was inspired by the Basque and MultiWordNet projects.
+
+<p>If a synset is marked as lexicalized <code>False</code> then it means it has no
+lemmas, and this is a deliberate decision on the part of the wordnet
+builders (but the synset may be included to keep the hierarchy in sync
+with other projects). For example the synset <i>dedos</i> "fingers and toes"
+in Spanish would be <code>lexicalized=false</code>
+  in English.
+
+<p>If a sense has lexicalized <code>True</code>
+  then it has been validated in some
+standard lexicon for the language. If it has lexicalized <code>False</code>, then
+it is believed to be compositional and only added as an aid to
+multilingual users (similar to <i>phrasets</i> in multiwordnet). For example
+<i>harimau anak</i> "young tiger" in the Indonesian synset for tiger cub is
+<code>lexicalized=false</code>, or <i>dedos pedas</i> "foot
+finger-and-toes" in the synset for toe in Spanish.
+
+
+
+	  
+
+<p>The original documentation for the parts of speech in the Princeton
+  Wordnet is
+  <a href='https://wordnet.princeton.edu/documentation/wndb5wn'>here</a>.
+  We have added some new possibilities.
+
+
+    </div>
+
+
+
+
+<hr> 
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond </a>
+</address>
+Contributors: Francis Bond, Luís Morgado da Costa, Michael Goodman, Ryan Foster,
+Lars Nygaard, Adam Pease, John McCrae, Luís Morgado da Costa, Michael
+Goodman and all the wordnet projects.
+
+ <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </div>
+  
+</body>
+</html>

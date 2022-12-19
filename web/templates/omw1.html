@@ -1,0 +1,236 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>OMW Version 1</h1>
+
+ <p> This page provides access to wordnets in a variety of
+   languages, all linked to
+    the <a href="http://wordnet.princeton.edu/">Princeton Wordnet of
+    English</a> (PWN).  The individual wordnets have been made by
+    many different projects and vary greatly in size and accuracy.
+    This page has (i) extracted and normalized the data, (ii) linked
+    it to Princeton WordNet 3.0 and (iii) put it in one place.  This
+    page only includes those with a license that allows
+   redistribution <a href="#Bond:Paik:2012">(Bond and Paik, 2012)</a>.
+   
+  <p><a href='https://compling.upol.cz/ntumc/cgi-bin/wn-gridx.cgi?gridmode=grid'>Search in OMW 1.3 (human curated)</a>
+
+ <p>We extended this  with
+    automatically extracted data for over 150 languages 
+    from <a href='https://en.wiktionary.org/wiki/Wiktionary:Main_Page'>Wiktionary</a>
+    and the <a href='http://cldr.unicode.org/'>‎Unicode Common Locale
+    Data Repository</a>  (<a href='#Bond:Foster:2013'>Bond and Foster, 2013</a>). 
+
+    
+  <p><a href='https://compling.upol.cz/ntumc/cgi-bin/wn-gridx.cgi?gridmode=gridx'>Search
+  in Extended OMW 1.3 (with Wiktionary and UCLDR data)</a>
+  
+
+  <h4>Data and Code</h4>
+  <ul>
+    <li>The data files are available in the
+      <a href='https://github.com/omwn/omw-data'>OMW Data Repository</a>
+    <li>Disambiguated Swadesh lists are available
+      <a href='https://www.luismc.com/home/data#swadesh'>here</a>
+    <li>Code for the wordnet browser is available
+      <a href='https://github.com/bond-lab/IMI'>here</a>
+    <li>You can use the OMW data in the
+      <a href='https://www.nltk.org/howto/wordnet.html'>NLTK
+	wordnet interface</a>;  you have to download the data, e.g.
+      <pre>
+	nltk.download("wordnet")
+	nltk.download("omw-1.4")
+	# if you want the wiktionary data
+	nltk.download("extended_omw")
+      </pre>
+  </ul>
+
+
+  <h4>Documentation and Notes</h4>
+
+    <h5>Core</h5>
+  <p>Synsets marked with ✪ are in the semi-automatically compiled list
+of 5000 <b>core</b> word senses in Princeton WordNet (approximately
+the 5000 most frequently used word senses).  They are marked with ✪ in
+the interface. The original list is here
+from <a href="http://wordnetcode.princeton.edu/standoff-files/core-wordnet.txt"
+target="_self">http://wordnetcode.princeton.edu/standoff-files/core-wordnet.txt</a>
+(<a href='http://wordnet.princeton.edu/wordnet/publications/jbj-jeju-fellbaum.pdf'>Boyd-Graber
+et al.,
+2008</a>)</a>.  <a href="https://github.com/omwn/omw-data/tree/main/etc">Our
+version</a> (converted to use collaborative interlingual index).</p>
+
+<p>The wordnets are linked to the 
+<a href='http://www.ontologyportal.org'>Suggested Upper Merged 
+Ontology</a> (Sumo: <a href="#cite:sumo2">Niles and Pease, 2001</a>;
+ <a href="#cite:sumo1">Pease, 2011</a>); the  
+<a href='https://tempowordnet.greyc.fr/'>TempoWordNet</a> 
+(<a href="#cite:tempo">Dias et al., 2014</a>); the 
+Multilingual, layered sentiment lexicons 
+(ML-SentiCon: <a href="#cite:mlsenticon">Cruz et al., 2014</a>); 
+and  <a href='https://github.com/aesuli/SentiWordNet'>SentiWordNet3.0</a> 
+(<a href="#cite:sentiwn">Baccianella et al., 2010</a>).
+
+
+<p>Mapping between wordnet versions was done using the <a href='https://www.talp.upc.edu/content/wordnet-mappings-automatically-generated-mappings-among-wordnet-versions'>mappings from TALP at UPC</a> 
+<a href="#cite:mapp">(Daudé et al. 2000)</a>.
+
+
+<h3>Formats</h3>
+<h4>Tab files</h4>
+<p>The <tt>wn-data-*.tab</tt> files are tab separated files of synset-lemma pairs; or synset-subid-definition/example</p>
+
+<pre>
+# name␉lang␉url␉license
+offset-pos␉lang:lemma␉word
+offset-pos␉lang:def␉sid␉definition
+offset-pos␉lang:exe␉sid␉example
+...
+</pre>
+
+<table>
+<tr><td>name    </td><td>the name of the project</td></tr>
+<tr><td>lang    </td><td>the iso 3 letter code for the name</td></tr>
+<tr><td>url     </td><td>the url of the project</td></tr>
+<tr><td>license </td><td>a short name for the license</td></tr>
+<tr><td>offset  </td><td>the Princeton WordNet 3.0 offset 8 digit offset</td></tr>
+<tr><td>pos     </td><td>one of [a,v,n,r] (we treat 's' as 'a') </td></tr>
+<tr><td>lemma   </td><td>the lemma (word separator normalized to ' ')</td></tr>
+<tr><td>sid a   </td><td>the sub id of the definition/example (starting from 0)</td></tr>
+</table>
+
+<h4>Example:</h4>
+<pre>
+# Wordnet Bahasa	ind	http://wn-msa.sourceforge.net/	MIT 
+00019613-n	ind:def 0 masalah fisik yang nyata
+00019613-n	ind:lemma	inti
+00019613-n	ind:lemma	unsur
+11407591-n	ind:def	0	Novelis dan kritikus Perancis
+11407591-n	ind:def	1	pembela Dreyfus
+11407591-n	ind:lemma	Emile Zola
+11407591-n	ind:lemma	Zola
+</pre>
+<p>For this data to be really useful you need to combine it with the
+synset relations from the Princeton wordnet.
+
+
+
+  <h3>Known Problems</h3>
+  <ul>
+    <li>We discard any synsets not linked to PWN (such as new synsets
+      in the Arabic wordnet). Use OMW version2 for these.
+    <li>If the wordnet has a different structure, we only show those
+    concepts with synonymous or near synonymous links to PWN.  So for
+    Danish, Polish and Norwegian, we only have a small subset of the
+    entire wordnet.
+    <li>We currently only make use of synset level sentiment analysis 
+    from ML-SentiCon (<a href="#cite:mlsenticon">Cruz et al., 2014</a>), 
+    we do not show the language specific lemma level analysis. 
+    <li>We currently can't add wordnets that don't link to PWN (such
+    as Gaelic). 
+    <li> We are focused on adding lemmas, we do not have all extra
+    information from other projects such as:
+      <ul>
+	<li> Definitions and examples from wordnets such as Spanish
+	<li> Orthographic variation and pronunciation in the Hebrew Wordnet
+     </ul>
+      We plan to add this information as time permits.
+    <li> We should strip diacritics from the Arabic wordnet to make it
+      easier for lookup.
+    <li>We may yet be missing some available wordnets: please help us add
+    more.  Any wordnet with an open license that links to the
+    Princeton Wordnet is welcome.
+    <li>The interface is not very multilingual.
+    </ul>
+<h5>Notes</h5>
+  <p>There are some places where I made changes to harmonize
+    different wordnets:
+    <ul>
+      <li>Inter-word separator changed to space ' ' (some wordnets had '_'). Note that non-segmenting languages (e.g. Japanese and Thai have no inter word separator)
+      <li>Ignore the focal/satellite adjective distinction as not all wordnets make it and we don't show it in the interface. That is, map map all 's' to 'a'
+    </ul>  
+
+
+    
+    
+    <h4>References</h4>
+    <dl>
+        <dt>
+       <a name="Bond:Paik:2012">Francis Bond and Kyonghee Paik</a> (2012) 
+	<dd><a href="http://web.mysites.ntu.edu.sg/fcbond/open/pubs/2012-gwc-wn-license.pdf">A survey of wordnets and their licenses</a> 
+	  In <i>Proceedings of the 6th Global WordNet Conference 
+	    (GWC 2012)</i>. Matsue. 64–71
+	</dd>
+
+      <dt><a name="Bond:Foster:2013">Francis Bond and Ryan Foster (2013)</a>
+	<dd><a href="http://aclweb.org/anthology/P/P13/P13-1133.pdf">Linking
+	    and extending an open multilingual wordnet</a>. In <i>51st Annual
+	    Meeting of the Association for Computational Linguistics:
+	    ACL-2013</i>. Sofia. 1352&ndash;1362
+      </dt>
+      <dt>	Boyd-Graber, J., Fellbaum, C., Osherson, D., and
+      Schapire, R. (2006): <strong><a name="cite:core">core</a></strong> 
+	<dd><a href="http://wordnet.princeton.edu/wordnet/publications/jbj-jeju-fellbaum.pdf">Adding
+	dense, weighted connections to WordNet.</a> In: <i>Proceedings
+	of the Third Global WordNet Meeting</i>, Jeju Island, Korea,
+	  January 2006</a>
+
+  <dt><strong>
+	Baccianella, Andrea Esuli Stefano and Sebastiani, Fabrizio,
+	(2010):
+	<a name="cite:sentiwn">sentiwn</a></strong> 
+	<dd><a href='http://nmis.isti.cnr.it/sebastiani/Publications/LREC10.pdf'>
+	       SentiWordNet 3.0: An Enhanced Lexical Resource for Sentiment 
+	       Analysis and Opinion Mining.</a>, <i> Proceedings of the Seventh conference 
+	    on International Language Resources and Evaluation (LREC'10) </i>, Valletta, Malta, 2010
+
+
+      <dt>
+	Cruz, Fermín L., José A. Troyano, Beatriz Pontes, F. Javier
+	Ortega, (2014):
+	<strong><a name="cite:mlsenticon">ml-senticon</a></strong> 
+	<dd><a href='http://www.sciencedirect.com/science/article/pii/S0957417414001997'>
+	       Building layered, multilingual sentiment lexicons at synset and lemma 
+	       levels</a>,<i> Expert Systems with Applications </i>, 2014
+
+	<dt>
+	  <a name="Daude:Padro:German:2000">Jordi Daudé, Lluís Padró and German Rigau</a> 
+	  (2000):
+	  <strong><a name="cite:mapp">mapp</a></strong> 
+	    <dd><a href="http://nlp.lsi.upc.edu/papers/daude00.pdf">Mapping WordNets Using Structural Information</a>.
+	      <i>38th Annual Meeting of the Association for Computational Linguistics (ACL'2000)</i>,
+	      Hong Kong
+	<dt>
+	  <a name="Pease:2011">Adam Pease</a> (2011):
+	  	  <strong><a name="cite:sumo1">sumo</a></strong> 
+		  
+	  <dd><i>Ontology: A Practical Guide</i>. Articulate Software
+	    Press, Angwin, CA. ISBN 978-1-889455-10-5.
+
+	<dt>
+	  <a name="Niles:Pease:2001">Niles, I and Adam Pease</a>
+	  (2001):
+	  	  <strong><a name="cite:sumo2">sumo</a></strong> 
+
+	  <dd>Toward a Standard Upper Ontology.  In
+	    <i>Proceedings of the 2nd International Conference 
+	      on Formal Ontology in Information Systems 
+	      (FOIS-2001)</i>, Chris Welty and Barry Smith, eds.
+	</dt>
+	    <dt>
+	  Gaël Dias, Mohammed Hasanuzzaman, Stéphane Ferrari, Yann
+	  Mathet (2014):
+	  <strong><a name="cite:tempo">tempo</a></strong> 
+	  <dd><a href="http://dl.acm.org/citation.cfm?id=2579042">
+	    TempoWordNet for Sentence Time Tagging<a>.  
+	    <i>Proceedings of the Companion Publication of the 23rd 
+	    International Conference on World Wide Web Companion</i> 
+	    pages 833&ndash;838, Switzerland	</dt>
+	      </dl>
+</div>
+{% endblock %}

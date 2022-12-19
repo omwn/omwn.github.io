@@ -1,0 +1,440 @@
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	  crossorigin="anonymous">
+    
+  <link href="../static/css/home.css" rel="stylesheet">
+
+</head>
+
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"><img width=50
+					   src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+	      
+	      <a href="../index.html"
+		 class="nav-item nav-link">Overview</a>
+	      
+	      <a href="../omw1.html"
+		 class="nav-item nav-link">OMW v1</a>
+	      
+	      <a href="../omw2.html"
+		 class="nav-item nav-link">OMW v2</a>
+	      
+	      <a href="../news.html"
+		 class="nav-item nav-link">News</a>
+	      
+	      <a href="../docs.html"
+		 class="nav-item nav-link">Documentation</a>
+	      
+	    </div>
+	</div>
+      </div>
+  </nav>
+</header>
+  <div class="column">
+
+    <div class="container">
+        <h1>Wordnet Topics</h1>
+
+	<p>This page provides documentation for the coarse
+	  classification originally used by the Princeton Wordnet to
+	  divide senses up.  We call them <b>topics</b>, they are
+	  originally called <tt>lexicographic file names</tt> and have
+	  also been called <tt>semantic fields</tt> and <tt>super-senses</tt>.
+	
+<p>In Princeton Wordnet, at the top level, nouns are organized into 25
+beginner "trees" for nouns and 15 for verbs (called lexicographic
+files). All are linked to a unique beginner
+synset, "entity". Noun hierarchies are far deeper than verb
+hierarchies. Adjectives are not organized into hierarchical
+trees. Instead, two "central" antonyms such as "hot" and "cold" form
+binary poles, while 'satellite' synonyms such as "steaming" and
+"chilly" connect to their respective poles via a "similarity"
+relations. The adjectives can be visualized in this way as "dumbbells"
+rather than as "trees".
+
+  <table class="table table-hover table-borderless table-sm">
+    <caption>Topics and their definitions</caption>
+    <thead class="thead-light">
+    <tr>
+      <th>POS</th> <th>Topic</th> <th>Abr</th> <th>Definition</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>adj</th>
+    </tr>
+    <tr>
+      <td></br></td>
+      <td>all </td>
+      <th>all</th>
+      <td>all adjective clusters</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>pert </td>
+      <th>prt</th>
+      <td>relational adjectives (pertainyms)</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>ppl </td>
+      <th>ppl</th>
+      <td>participial adjectives</td>
+    </tr>
+       
+    
+    <tr>
+      <th>adv</th>
+    </tr>
+    <tr>
+      <td></br></td>
+      <td>all </td>
+      <th>all</th>
+      <td>all adverbs</td>
+    </tr>
+       
+    
+    <tr>
+      <th>noun</th>
+    </tr>
+    <tr>
+      <td></br></td>
+      <td>Tops </td>
+      <th>top</th>
+      <td>unique beginner for nouns</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>act </td>
+      <th>act</th>
+      <td>nouns denoting acts or actions</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>animal </td>
+      <th>anm</th>
+      <td>nouns denoting animals or animal parts</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>artifact </td>
+      <th>art</th>
+      <td>nouns denoting man-made objects</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>attribute </td>
+      <th>att</th>
+      <td>nouns denoting attributes of people and objects</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>body </td>
+      <th>bod</th>
+      <td>nouns denoting human body parts</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>cognition </td>
+      <th>cog</th>
+      <td>nouns denoting cognitive processes and contents</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>communication </td>
+      <th>com</th>
+      <td>nouns denoting communicative processes and contents,
+this includes languages and computation</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>event </td>
+      <th>evt</th>
+      <td>nouns denoting natural events</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>feeling </td>
+      <th>flg</th>
+      <td>nouns denoting feelings and emotions</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>food </td>
+      <th>fod</th>
+      <td>nouns denoting foods and drinks</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>group </td>
+      <th>grp</th>
+      <td>nouns denoting groupings of people or objects</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>location </td>
+      <th>loc</th>
+      <td>nouns denoting spatial position</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>motive </td>
+      <th>mtv</th>
+      <td>nouns denoting goals</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>object </td>
+      <th>obj</th>
+      <td>nouns denoting natural objects (not man-made)</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>person </td>
+      <th>per</th>
+      <td>nouns denoting people</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>phenomenon </td>
+      <th>phn</th>
+      <td>nouns denoting natural phenomena</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>plant </td>
+      <th>pln</th>
+      <td>nouns denoting plants or plant parts</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>possession </td>
+      <th>pos</th>
+      <td>nouns denoting possession and transfer of possession</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>process </td>
+      <th>prc</th>
+      <td>nouns denoting natural processes</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>quantity </td>
+      <th>qnt</th>
+      <td>nouns denoting quantities and units of measure</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>relation </td>
+      <th>rln</th>
+      <td>nouns denoting relations between people or things or ideas</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>shape </td>
+      <th>shp</th>
+      <td>nouns denoting two and three dimensional shapes</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>state </td>
+      <th>stt</th>
+      <td>nouns denoting stable states of affairs</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>substance </td>
+      <th>sub</th>
+      <td>nouns denoting substances</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>time </td>
+      <th>tim</th>
+      <td>nouns denoting time and temporal relations</td>
+    </tr>
+       
+    
+    <tr>
+      <th>verb</th>
+    </tr>
+    <tr>
+      <td></br></td>
+      <td>body </td>
+      <th>bod</th>
+      <td>verbs of grooming, dressing and bodily care</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>change </td>
+      <th>chn</th>
+      <td>verbs of size, temperature change, intensifying, etc</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>cognition </td>
+      <th>cog</th>
+      <td>verbs of thinking, judging, analyzing, doubting</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>communication </td>
+      <th>com</th>
+      <td>verbs of telling, asking, ordering, singing</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>competition </td>
+      <th>cmp</th>
+      <td>verbs of fighting, athletic activities</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>consumption </td>
+      <th>con</th>
+      <td>verbs of eating and drinking</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>contact </td>
+      <th>cnt</th>
+      <td>verbs of touching, hitting, tying, digging</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>creation </td>
+      <th>crt</th>
+      <td>verbs of sewing, baking, painting, performing</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>emotion </td>
+      <th>emo</th>
+      <td>verbs of feeling</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>motion </td>
+      <th>mot</th>
+      <td>verbs of walking, flying, swimming</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>perception </td>
+      <th>pcp</th>
+      <td>verbs of seeing, hearing, feeling</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>possession </td>
+      <th>pos</th>
+      <td>verbs of buying, selling, owning</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>social </td>
+      <th>soc</th>
+      <td>verbs of political and social activities and events</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>stative </td>
+      <th>stv</th>
+      <td>verbs of being, having, spatial relations</td>
+    </tr>
+      
+    <tr>
+      <td></br></td>
+      <td>weather </td>
+      <th>wet</th>
+      <td>verbs of raining, snowing, thawing, thundering</td>
+    </tr>
+       
+    
+    </tbody>
+    </table>
+
+<p>The original documentation for the lexicographer file names is 
+  <a href='https://wordnet.princeton.edu/documentation/lexnames5wn'>here</a>.
+  We have expanded the definitions of some of the files.
+
+
+    </div>
+
+
+
+
+<hr> 
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond </a>
+</address>
+Contributors: Francis Bond, Luís Morgado da Costa, Michael Goodman, Ryan Foster,
+Lars Nygaard, Adam Pease, John McCrae, Luís Morgado da Costa, Michael
+Goodman and all the wordnet projects.
+
+ <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </div>
+  
+</body>
+</html>

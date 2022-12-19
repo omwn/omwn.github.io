@@ -1,0 +1,226 @@
+[adj.all]
+abv = "all"
+num = "00"
+dfn = "all adjective clusters"
+
+[adj.pert]
+abv = "prt"
+num = "01"
+dfn = "relational adjectives (pertainyms)"
+
+[adj.ppl]
+abv = "ppl"
+num = "44"
+dfn = "participial adjectives"
+
+[adv.all]
+abv = "all"
+num = "02"
+dfn = "all adverbs"
+
+[noun.Tops]
+abv = "top"
+num = "03"
+dfn = "unique beginner for nouns"
+
+[noun.act]
+abv = "act"
+num = "04"
+dfn = "nouns denoting acts or actions"
+
+[noun.animal]
+abv = "anm"
+num = "05"
+dfn = "nouns denoting animals or animal parts"
+
+[noun.artifact]
+abv = "art"
+num = "06"
+dfn = "nouns denoting man-made objects"
+
+[noun.attribute]
+abv = "att"
+num = "07"
+dfn = "nouns denoting attributes of people and objects"
+
+[noun.body]
+abv = "bod"
+num = "08"
+dfn = "nouns denoting human body parts"
+
+[noun.cognition]
+abv = "cog"
+num = "09"
+dfn = "nouns denoting cognitive processes and contents"
+
+[noun.communication]
+abv = "com"
+num = "10"
+dfn = """nouns denoting communicative processes and contents, 
+this includes languages and computation"""
+
+[noun.event]
+abv = "evt"
+num = "11"
+dfn = "nouns denoting natural events"
+
+[noun.feeling]
+abv = "flg"
+num = "12"
+dfn = "nouns denoting feelings and emotions"
+
+[noun.food]
+abv = "fod"
+num = "13"
+dfn = "nouns denoting foods and drinks"
+
+[noun.group]
+abv = "grp"
+num = "14"
+dfn = "nouns denoting groupings of people or objects"
+
+[noun.location]
+abv = "loc"
+num = "15"
+dfn = "nouns denoting spatial position"
+
+[noun.motive]
+abv = "mtv"
+num = "16"
+dfn = "nouns denoting goals"
+
+[noun.object]
+abv = "obj"
+num = "17"
+dfn = "nouns denoting natural objects (not man-made)"
+
+[noun.person]
+abv = "per"
+num = "18"
+dfn = "nouns denoting people"
+
+[noun.phenomenon]
+abv = "phn"
+num = "19"
+dfn = "nouns denoting natural phenomena"
+
+[noun.plant]
+abv = "pln"
+num = "20"
+dfn = "nouns denoting plants or plant parts"
+
+[noun.possession]
+abv = "pos"
+num = "21"
+dfn = "nouns denoting possession and transfer of possession"
+
+[noun.process]
+abv = "prc"
+num = "22"
+dfn = "nouns denoting natural processes"
+
+[noun.quantity]
+abv = "qnt"
+num = "23"
+dfn = "nouns denoting quantities and units of measure"
+
+[noun.relation]
+abv = "rln"
+num = "24"
+dfn = "nouns denoting relations between people or things or ideas"
+
+[noun.shape]
+abv = "shp"
+num = "25"
+dfn = "nouns denoting two and three dimensional shapes"
+
+[noun.state]
+abv = "stt"
+num = "26"
+dfn = "nouns denoting stable states of affairs"
+
+[noun.substance]
+abv = "sub"
+num = "27"
+dfn = "nouns denoting substances"
+
+[noun.time]
+abv = "tim"
+num = "28"
+dfn = "nouns denoting time and temporal relations"
+
+[verb.body]
+abv = "bod"
+num = "29"
+dfn = "verbs of grooming, dressing and bodily care"
+
+[verb.change]
+abv = "chn"
+num = "30"
+dfn = "verbs of size, temperature change, intensifying, etc"
+
+[verb.cognition]
+abv = "cog"
+num = "31"
+dfn = "verbs of thinking, judging, analyzing, doubting"
+
+[verb.communication]
+abv = "com"
+num = "32"
+dfn = "verbs of telling, asking, ordering, singing"
+
+[verb.competition]
+abv = "cmp"
+num = "33"
+dfn = "verbs of fighting, athletic activities"
+
+[verb.consumption]
+abv = "con"
+num = "34"
+dfn = "verbs of eating and drinking"
+
+[verb.contact]
+abv = "cnt"
+num = "35"
+dfn = "verbs of touching, hitting, tying, digging"
+
+[verb.creation]
+abv = "crt"
+num = "36"
+dfn = "verbs of sewing, baking, painting, performing"
+
+[verb.emotion]
+abv = "emo"
+num = "37"
+dfn = "verbs of feeling"
+
+[verb.motion]
+abv = "mot"
+num = "38"
+dfn = "verbs of walking, flying, swimming"
+
+[verb.perception]
+abv = "pcp"
+num = "39"
+dfn = "verbs of seeing, hearing, feeling"
+
+[verb.possession]
+abv = "pos"
+num = "40"
+dfn = "verbs of buying, selling, owning"
+
+[verb.social]
+abv = "soc"
+num = "41"
+dfn = "verbs of political and social activities and events"
+
+[verb.stative]
+abv = "stv"
+num = "42"
+dfn = "verbs of being, having, spatial relations"
+
+[verb.weather]
+abv = "wet"
+num = "43"
+dfn = "verbs of raining, snowing, thawing, thundering"
+

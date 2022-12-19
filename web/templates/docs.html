@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{title}}</h1>
+        <p>{{description}}</p>
+
+	<p>A wordnet is semantic network.  Synonymous words (including
+  MWEs) are grouped into synsets.  These synsets are then linked to
+  other synsets via semantic relations such as hypernym.  Ideally, the
+  meaning of a synset is further clarified with a short defining
+  definition (or gloss) and or more usage examples.
+
+	<p>Originally, Princeton WordNet only included the lexical
+  categories of major content words: nouns, verbs, adjectives and
+  adverbs.  Other wordnets have added other parts of speech, such as
+  pronouns and exclamatives.
+
+
+
+  <ul>
+    <li><a href="{{ url_for('show_doc',  page='pos') }}">Parts of Speech</a> 
+    <li> <a href='https://globalwordnet.github.io/gwadoc/'>Semantic
+	Relations</a>
+    <li><a href="{{ url_for('show_doc',  page='topics') }}">Topics
+	(lexicographer files)</a>
+  </ul>
+	
+
+    </div>
+{% endblock %}

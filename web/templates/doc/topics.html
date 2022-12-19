@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Wordnet Topics</h1>
+
+	<p>This page provides documentation for the coarse
+	  classification originally used by the Princeton Wordnet to
+	  divide senses up.  We call them <b>topics</b>, they are
+	  originally called <tt>lexicographic file names</tt> and have
+	  also been called <tt>semantic fields</tt> and <tt>super-senses</tt>.
+	
+<p>In Princeton Wordnet, at the top level, nouns are organized into 25
+beginner "trees" for nouns and 15 for verbs (called lexicographic
+files). All are linked to a unique beginner
+synset, "entity". Noun hierarchies are far deeper than verb
+hierarchies. Adjectives are not organized into hierarchical
+trees. Instead, two "central" antonyms such as "hot" and "cold" form
+binary poles, while 'satellite' synonyms such as "steaming" and
+"chilly" connect to their respective poles via a "similarity"
+relations. The adjectives can be visualized in this way as "dumbbells"
+rather than as "trees".
+
+  <table class="table table-hover table-borderless table-sm">
+    <caption>Topics and their definitions</caption>
+    <thead class="thead-light">
+    <tr>
+      <th>POS</th> <th>Topic</th> <th>Abr</th> <th>Definition</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%- for pos in data %}
+    <tr>
+      <th>{{pos}}</th>
+    </tr>
+      {%- for topic in data[pos] %}
+    <tr>
+      <td></br></td>
+      <td>{{topic}} </td>
+      <th>{{data[pos][topic]['abv']}}</th>
+      <td>{{data[pos][topic]['dfn']}}</td>
+    </tr>
+      {% endfor %} 
+    {% endfor %}
+    </tbody>
+    </table>
+
+<p>The original documentation for the lexicographer file names is 
+  <a href='https://wordnet.princeton.edu/documentation/lexnames5wn'>here</a>.
+  We have expanded the definitions of some of the files.
+
+
+    </div>
+{% endblock %}

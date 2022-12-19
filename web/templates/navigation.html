@@ -1,0 +1,22 @@
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"><img width=50
+					   src="{{ url_for('static',
+					   filename='img/omw-logo.svg')
+					   }}"/> Open Multilingual Wordnet</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+	      {% for pg in nav %}
+	      <a href="{{ url_for('show', page=pg) }}"
+		 class="nav-item nav-link{% if page == pg %} active{%
+		 endif %}">{{ nav[pg]['name'] }}</a>
+	      {% endfor %}
+	    </div>
+	</div>
+      </div>
+  </nav>
+</header>

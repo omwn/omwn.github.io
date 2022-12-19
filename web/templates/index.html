@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Overview</h1>
+
+  <p>Welcome to the Open Multilingual Wordnet (OMW) project.  The goal
+    of this project is to make it easy to use wordnets in multiple
+    languages.  We have been working for many years to make a shared
+    format and link the wordnets together.  OMW and its components are
+      <a href='http://opendefinition.org/'>open</a>: they can be freely used, 
+      modified, and shared by anyone for any purpose.  
+      There is a fuller list of wordnets at the Global Wordnet Association's
+      <a href='http://globalwordnet.org/wordnets-in-the-world/'>Wordnets
+	in the World page</a>.
+
+    <p>If you use these wordnets, please cite the original projects
+    who created them, if you got value from this
+    aggregation/normalization, please cite <a href="#Bond:Paik:2012">Bond and Paik (2012)</a>.
+
+    <p>There are currently two versions of the OMW.  
+      <ul>
+	<li><a href="{{ url_for('show',  page='omw1') }}">OMW Version 1</a> links hand created wordnets and
+	  automatically created wordnets for over a 150 languages
+	  through the Princeton Wordnet of English.
+	   
+	<li><a href="{{ url_for('show', page='omw2') }}"> OMW Version
+	    2</a>, the current (experimental) version, uses the
+	    Collaborative Interlingual Index to link the wordnets
+	  together <a href='#Bond:Vossen:McCrae:Fellbaum:2016'>(Bond etal., 2016)
+	    </a>.
+	  </ul>
+      </ul>
+      <h3>References</h3>
+      <dl>
+	<dt><a name="Bond:Paik:2012">Francis Bond and Kyonghee Paik</a> (2012) 
+	<dd><a href="https://bond-lab.github.io/pdf/2012-gwc-wn-license.pdf">A survey of wordnets and their licenses</a> 
+	  In <i>Proceedings of the 6th Global WordNet Conference 
+	    (GWC 2012)</i>. Matsue. 64–71
+	</dd>
+ <dt><a name="Bond:Vossen:McCrae:Fellbaum:2016">Francis Bond, Piek Vossen, John McCrae, and Christiane Fellbaum (2016)</a></dt>
+  <dd><a href="https://aclanthology.org/2016.gwc-1.9/">CILI: the Collaborative Interlingual Index</a>. 
+    In <i><a href="https://aclanthology.org/volumes/2016.gwc-1/">Proceedings of the 8th Global WordNet Conference (GWC2016)</a></i>, Bucharest. pp&nbsp;50&ndash;57
+</dd>
+      </dl> 
+</div>
+{% endblock %}

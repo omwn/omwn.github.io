@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <ul>
+    <li><strong>2022-12-18</strong> Moved OMW homepage to 
+      <a href='https://omwn.org/'>omwn.org</a>
+      
+      
+    <li><strong>2020-11-06</strong> Moved OMW data to github
+      <a href='https://github.com/omwn/omw-data/'>omw-data</a>
+
+
+    <li> <strong>2016</strong> First release of OMW 2.0
+    <li> <strong>2015-09-24</strong> Release of OMW 1.3 (new resources, new language, updates)
+    <ul>
+      <li> 28 languages in all
+      <li> Added Croatian Wordnet v2.0 (thanks to Antoni Oliver Gonzales, Krešimir Šojat and Matea Srebačić)
+      <li> Updated Polish to 2.3 (thanks to Maciej Piasecki)
+      <li> Updated Arabic to 2 (thanks to Lahsen Abouenour) 
+      <li> Updated Wordnet Bahasa (now with Indonesian definitions, thanks to David Moeljadi)
+      <li> Improved interface to NLTK (thanks to Steven Bird)
+    </ul>
+  <li> <strong>2014-09-16</strong> Release of OMW 1.2 (new resources, new language, and new interface)
+    <ul>
+      <li>Added BulTreeBank Wordnet, for Bulgarian  (thanks to Kiril Simov and Petya Osenova)
+      <li> Added Semantic Fields
+      <li> Added Verb Frames
+      <li> New Multilingual Search Interface (with a backoff language)
+    </ul>
+  <li> <strong>2014-05-30</strong>  Languages Update 
+    <ul>
+      <li>Polish was updated to version 2.2  (thanks to Maciej Piasecki)
+      <li>Added Extended Wordnet with automatically derived data
+    </ul>
+  <li> <strong>2014-05-30</strong>  Release of OMW 1.1 (New Resources)
+    <ul>
+      <li>Added Princeton Wordnet 5000 "core" marking (most frequent word senses)
+      <li>Added derivation sense links 
+      <li>Added SentiWordNet
+      <li>Added ML-SentiCon
+      <li>Added TempoWordNet
+    </ul>
+  <li> <strong>2014-04-18</strong>  New Languages 
+    <ul>
+      <li>Added Slovenian (thanks to Darja Fišer and Tomaž Erjavec)
+    </ul>
+  <li> <strong>2014-04-18</strong>  New Languages 
+    <ul>
+      <li>Added Greek (thanks to Lars Nygaard)
+      <li>Added Swedish (thanks to John P. McCrae)
+    </ul>
+
+  <li> <strong>2014-02-08</strong> New Languages and New Host
+    <ul>
+      <li>Added data from Bond and Foster (2013)
+      <li>Officially moved from <tt>cast-net.jp</tt> (thanks for the hosting up till now)
+    </ul>
+
+  <li> <strong>2014-01-30</strong> New Languages and formats
+    <ul>
+      <li>Added Chinese Open Wordnet 42,315 synsets, 61,536 words, 79,812 senses
+      <li>Added Wordnet-LMF and lemon-rdf  (thanks for help from John P. McCrae)
+    </ul>
+  <li> <strong>2013-12-02</strong> New Language
+   <ul>
+     <li>Polish Wordnet (Thanks to Maciej)
+   </ul>
+  <li> <strong>2013-08-04</strong> New Language
+   <ul>
+     <li>Chinese Wordnet (Thanks to Shu-Kai and Chu-Ren)
+   </ul>
+  <li> <strong>2013-01-08</strong> New Languages and Bug fix
+    <ul>
+      <li>New SUMO mappings (thanks Adam)
+      <li>Added Albanet (Albanian) 4,676 synsets
+      <li>Updated WOLF to 1.0b (French) 59,091 synsets (was 32,466)
+      <li>Updated Wordnet Bahasa (Malay/Indonesian) 39,873/47,491 synsets (was 20,000)
+    </ul>
+ <li> <strong>2013-01-07</strong> Bug fix
+   <ul>
+     <li>better script for the OpenWN-PT; 
+     <li> map all 's' to 'a' (ignore the focal/satellite adjective
+     distinction as not all wordnets make it and we don't show it in the interface)
+   </ul>
+ <li> <strong>2012-10-02</strong> New Languages
+   <ul>
+     <li>Danish, Bokmål, Nynorsk, Italian,
+       Basque, Spanish, Catalan and Galician (thanks to Lars, Emanuele, German)
+   </ul>
+ <li> <strong>2012-07-27</strong> New Language
+   <ul>
+     <li>Portuguese (Thanks to  Alexandre, Valeria and Gerard)
+   </ul>
+ <li> <strong>2012-05-07</strong> First Release
+   <ul>
+     <li>Simple searchable multilingual wordnet
+   </ul>
+</ul>
+
+
+  
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Open Multilingual Wordnet 2</h1>
+
+  <p>Instead of linking all languages through Princeton Wordnet, the
+    OMW Version 2 aims to create and maintain a Collaborative
+    Interlingual Index to link the wordnets together
+
+
+      <h3>References</h3>
+      <dl>
+	<dt><a name="Bond:Paik:2012">Francis Bond and Kyonghee Paik</a> (2012) 
+	<dd><a href="https://bond-lab.github.io/pdf/2012-gwc-wn-license.pdf">A survey of wordnets and their licenses</a> 
+	  In <i>Proceedings of the 6th Global WordNet Conference 
+	    (GWC 2012)</i>. Matsue. 64–71
+	</dd>
+ <dt><a name="Bond:Vossen:McCrae:Fellbaum:2016">Francis Bond, Piek Vossen, John McCrae, and Christiane Fellbaum (2016)</a></dt>
+  <dd><a href="https://aclanthology.org/2016.gwc-1.9/">CILI: the Collaborative Interlingual Index</a>. 
+    In <i><a href="https://aclanthology.org/volumes/2016.gwc-1/">Proceedings of the 8th Global WordNet Conference (GWC2016)</a></i>, Bucharest. pp&nbsp;50&ndash;57
+</dd>
+
+	<dt><a name="OMW2a">Francis Bond, Luis Morgado da Costa, Michael Wayne Goodman, John Philip McCrae and Ahti Lohk (2020)</a></dt>
+  <dd><a href="https://aclanthology.org/2020.lrec-1.390/">Some Issues with Building a Multilingual Wordnet</a>. 
+    In <i><a href="https://aclanthology.org/volumes/2020.lrec-1/">Proceedings of the 12th Language Resources and Evaluation Conference (LREC 2020)</a></i>, pp 3182‑3190 (<a href="https://aclanthology.org/2020.lrec-1.390.bib">.bib</a>)
+  </dd>
+  <dt><a name="Vossen:Bond:McCrae:2016">Piek Vossen, Francis Bond, and John McCrae (2016)</a></dt>
+  <dd><a href="https://aclanthology.org/2016.gwc-1.59/">Toward a truly multilingual Global WordNet Grid</a>. 
+    In <i><a href="https://aclanthology.org/volumes/2016.gwc-1/">Proceedings of the 8th Global WordNet Conference (GWC2016)</a></i>, Bucharest. pp&nbsp;419&ndash;426
+</dd>
+
+	
+      </dl> 
+      
+</div>
+{% endblock %}

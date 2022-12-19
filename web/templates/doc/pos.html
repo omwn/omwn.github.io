@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Wordnet Topics</h1>
+
+	<p>This page provides documentation for the parts-of-speech.
+
+  <table class="table table-hover table-borderless table-sm">
+    <caption>Parts of Speech</caption>
+    <thead class="thead-light">
+    <tr>
+      <th>POS</th> <th>Name</th> <th>Extra</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%- for pos in data %}
+    <tr>
+      <th>{{pos}}</th>
+      <td>{{data[pos]['nam']}} </td>
+      <td>{{data[pos]['exp']}} </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+<p>Princeton WordNet defines the original four open class parts of
+  speech: either noun, verb, adjective, or adverb. It later added
+  satellite adjectives, which are in clusters representing a concept that is
+  similar in meaning to the concept represented by its head synset.
+  OMW maps them internally to adjectives.
+
+<p>Conjunctions and adpositions are reserved for extending to new
+  semi-open classes.
+
+<p><strong>x</strong> is used for non-referential words such as
+  particles, classifiers, exclamatives, greetings, determiners and so forth.
+
+<p><strong>z</strong> is used for phrases, for example to
+  represent <i>phrasets</i>, introduced by <a href='Beyond Lexical
+  Units: Enriching Wordnets with Phrasets'>Luisa Bentivogli and
+    Emanuele Pianta (2003)</a>.
+  <br><strong>DEPRECATED</strong> better to
+  use <strong>lexicalized</strong> instead.
+  
+<p><strong>u</strong> Is for automatically produced wordnets that want
+  to add words for which they are not sure of the part-of-speech.
+
+  <h4>Non-lexicalized Synsets and Senses</h4>
+  
+<p>We have an optional attribute <code>lexicalized</code>
+on the synset and sense types, with a boolean value, defaulting to
+true. This was inspired by the Basque and MultiWordNet projects.
+
+<p>If a synset is marked as lexicalized <code>False</code> then it means it has no
+lemmas, and this is a deliberate decision on the part of the wordnet
+builders (but the synset may be included to keep the hierarchy in sync
+with other projects). For example the synset <i>dedos</i> "fingers and toes"
+in Spanish would be <code>lexicalized=false</code>
+  in English.
+
+<p>If a sense has lexicalized <code>True</code>
+  then it has been validated in some
+standard lexicon for the language. If it has lexicalized <code>False</code>, then
+it is believed to be compositional and only added as an aid to
+multilingual users (similar to <i>phrasets</i> in multiwordnet). For example
+<i>harimau anak</i> "young tiger" in the Indonesian synset for tiger cub is
+<code>lexicalized=false</code>, or <i>dedos pedas</i> "foot
+finger-and-toes" in the synset for toe in Spanish.
+
+
+
+	  
+
+<p>The original documentation for the parts of speech in the Princeton
+  Wordnet is
+  <a href='https://wordnet.princeton.edu/documentation/wndb5wn'>here</a>.
+  We have added some new possibilities.
+
+
+    </div>
+{% endblock %}

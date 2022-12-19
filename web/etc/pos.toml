@@ -1,0 +1,28 @@
+[n]
+nam = "noun"
+
+[v]
+nam = "verb"
+
+[a]
+nam = "adjective"
+
+[r]
+nam = "adverb"
+
+[s]
+nam = "adjective satellite"
+
+[c]
+nam = "conjunction"
+
+[p]
+nam = "adposition"
+exp = "preposition, postposition, etc."
+
+[x]
+nam = "non-referential"
+exp = "particle, classifier, exclamative, etc."
+
+[u]
+nam = "unknown"
