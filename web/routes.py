@@ -46,12 +46,19 @@ def show_doc(page):
             data = toml.loads(f.read())
     except:
         data = dict()
-        
+    try:
+        with app.open_resource(f'etc/{page}.examples.toml', mode='rt') as f:
+            examples = toml.loads(f.read())
+    except:
+         examples = dict()
+    print(f'etc/{page}.examples.toml')
+      
     return render_template(
         f"doc/{page}.html",
         page=page,
         nav=nav,
         data = data,
+        examples = examples,
     )
 
 
