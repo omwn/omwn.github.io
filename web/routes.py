@@ -51,7 +51,6 @@ def show_doc(page):
             examples = toml.loads(f.read())
     except:
          examples = dict()
-    print(f'etc/{page}.examples.toml')
       
     return render_template(
         f"doc/{page}.html",
