@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Adjective Categories</h1>
+
+	<p>This page provides documentation for extra information
+  about adjectives.  In Princeton Wordnet and derivatives (such as the
+  Open English Wordnet), an adjective may be annotated with a
+  syntactic marker indicating a limitation on the syntactic position
+  the adjective may have in relation to noun that it
+  modifies. Information on possible adjective positions is stored in
+  the <strong>adjposition</strong> attribute instead of as part of the
+	  lemma.
+
+	  <ul>
+	    <li> prenominal (attributive) position only
+	      <ul>
+		<li><i>The acting president</i>
+		<li>*<i>The president is acting</i>
+		<li>*<i>The president acting</i>
+	      </ul>
+	    <li> predicate position only
+	      <ul>
+		<li><i>The pontoon is adrift</i>
+		<li>*<i>The adrift pontoon</i>
+		<li>*<i>The pontoon adrift</i>
+	      </ul>
+	    <li> immediate postnominal position
+	      <ul>
+		<li><i>We have prizes galore</i>
+		<li>*<i>We have galore prizes</i>
+		<li>*<i>The  prizes are galore</i>
+	      </ul>
+	  </ul>
+  <table class="table table-hover table-borderless table-sm">
+    <caption>Adjposition Classes and Examples</caption>
+    <thead class="thead-light">
+    <tr>
+      <th>Class</th> <th>Name</th> <th>Explanation</th> <th>Example</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%- for pos in data %}
+    <tr>
+      <th>{{pos}}</th>
+      <td>{{data[pos]['nam']}} </td>
+      <td>{{data[pos]['exp']}} </td>
+      {% if pos in examples %}
+      <td>
+    {%- for freq, lemma, ssid in examples[pos] %}
+    	 <i>{{ lemma }}</i><sub style="font-size:50%">{{ freq }}</sub>
+    	 {% endfor %}
+      </td>
+      {% else %}
+      <td></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+
+
+  
+<p>The original documentation for adjectives attributes in the
+  Princeton Wordnet is
+  <a href='https://wordnet.princeton.edu/documentation/wninput5wn'>here</a>, in the section on Special Adjective Syntax.
+
+<p>In the Python wn module (0.9.3) this information is accessed as
+follows:
+  <pre>
+>>> import wn
+>>> ewn = wn.Wordnet('omw-en:1.4')
+>>> ewn.senses('adrift')[0]
+Sense('omw-en-adrift-01910652-s')
+>>> ewn.senses('adrift')[0].adjposition()
+'p'
+  </pre>
+
+ <p>See <a href=' https://wn.readthedocs.io/en/latest/api/wn.html#wn.Sense.adjposition'>the api documentation for adjposition.</a>
+
+    </div>
+{% endblock %}
