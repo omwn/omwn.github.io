@@ -1,0 +1,760 @@
+{
+  "name": "factotum",
+  "value": 532,
+  "children": [
+    {
+      "name": "humanities",
+      "value": 212,
+      "children": [
+        {
+          "name": "history",
+          "value": 971,
+          "children": [
+            {
+              "name": "archaeology",
+              "value": 230
+            },
+            {
+              "name": "heraldry",
+              "value": 357
+            }
+          ]
+        },
+        {
+          "name": "linguistics",
+          "value": 1188,
+          "children": [
+            {
+              "name": "grammar",
+              "value": 348
+            }
+          ]
+        },
+        {
+          "name": "literature",
+          "value": 997,
+          "children": [
+            {
+              "name": "philology",
+              "value": 227
+            }
+          ]
+        },
+        {
+          "name": "philosophy",
+          "value": 479
+        },
+        {
+          "name": "psychology",
+          "value": 572,
+          "children": [
+            {
+              "name": "psychoanalysis",
+              "value": 252
+            },
+            {
+              "name": "psychological_features",
+              "value": 1171
+            }
+          ]
+        },
+        {
+          "name": "art",
+          "value": 552,
+          "children": [
+            {
+              "name": "graphic_arts",
+              "value": 152,
+              "children": [
+                {
+                  "name": "philately",
+                  "value": 144
+                }
+              ]
+            },
+            {
+              "name": "dance",
+              "value": 284
+            },
+            {
+              "name": "drawing",
+              "value": 230
+            },
+            {
+              "name": "painting",
+              "value": 340
+            },
+            {
+              "name": "music",
+              "value": 1007
+            },
+            {
+              "name": "photography",
+              "value": 216
+            },
+            {
+              "name": "plastic_arts",
+              "value": 180,
+              "children": [
+                {
+                  "name": "jewellery",
+                  "value": 251
+                },
+                {
+                  "name": "numismatics",
+                  "value": 204
+                },
+                {
+                  "name": "sculpture",
+                  "value": 159
+                }
+              ]
+            },
+            {
+              "name": "theatre",
+              "value": 392
+            },
+            {
+              "name": "cinema",
+              "value": 124
+            }
+          ]
+        },
+        {
+          "name": "paranormal",
+          "value": 294,
+          "children": [
+            {
+              "name": "occultism",
+              "value": 207
+            },
+            {
+              "name": "astrology",
+              "value": 187
+            }
+          ]
+        },
+        {
+          "name": "religion",
+          "value": 1178,
+          "children": [
+            {
+              "name": "theology",
+              "value": 304
+            },
+            {
+              "name": "roman_catholic",
+              "value": 276
+            },
+            {
+              "name": "mythology",
+              "value": 519
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "free_time",
+      "value": 387,
+      "children": [
+        {
+          "name": "radio",
+          "value": 164
+        },
+        {
+          "name": "tv",
+          "value": 128
+        },
+        {
+          "name": "play",
+          "value": 277,
+          "children": [
+            {
+              "name": "betting",
+              "value": 145
+            },
+            {
+              "name": "card",
+              "value": 201
+            },
+            {
+              "name": "chess",
+              "value": 129
+            }
+          ]
+        },
+        {
+          "name": "sport",
+          "value": 255,
+          "children": [
+            {
+              "name": "badminton",
+              "value": 70
+            },
+            {
+              "name": "baseball",
+              "value": 224
+            },
+            {
+              "name": "basketball",
+              "value": 97
+            },
+            {
+              "name": "cricket",
+              "value": 108
+            },
+            {
+              "name": "football",
+              "value": 147
+            },
+            {
+              "name": "golf",
+              "value": 147
+            },
+            {
+              "name": "rugby",
+              "value": 140
+            },
+            {
+              "name": "soccer",
+              "value": 81
+            },
+            {
+              "name": "table_tennis",
+              "value": 75
+            },
+            {
+              "name": "tennis",
+              "value": 73
+            },
+            {
+              "name": "volleyball",
+              "value": 50
+            },
+            {
+              "name": "cycling",
+              "value": 137
+            },
+            {
+              "name": "skating",
+              "value": 76
+            },
+            {
+              "name": "skiing",
+              "value": 158
+            },
+            {
+              "name": "hockey",
+              "value": 115
+            },
+            {
+              "name": "mountaineering",
+              "value": 198
+            },
+            {
+              "name": "rowing",
+              "value": 126
+            },
+            {
+              "name": "swimming",
+              "value": 139
+            },
+            {
+              "name": "sub",
+              "value": 145
+            },
+            {
+              "name": "diving",
+              "value": 157
+            },
+            {
+              "name": "racing",
+              "value": 336
+            },
+            {
+              "name": "athletics",
+              "value": 119
+            },
+            {
+              "name": "wrestling",
+              "value": 96
+            },
+            {
+              "name": "boxing",
+              "value": 189
+            },
+            {
+              "name": "fencing",
+              "value": 214
+            },
+            {
+              "name": "archery",
+              "value": 145
+            },
+            {
+              "name": "fishing",
+              "value": 247
+            },
+            {
+              "name": "hunting",
+              "value": 390
+            },
+            {
+              "name": "bowling",
+              "value": 131
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "applied_science",
+      "value": 202,
+      "children": [
+        {
+          "name": "agriculture",
+          "value": 504,
+          "children": [
+            {
+              "name": "animal_husbandry",
+              "value": 272,
+              "children": [
+                {
+                  "name": "veterinary",
+                  "value": 300
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "food",
+          "value": 841,
+          "children": [
+            {
+              "name": "gastronomy",
+              "value": 2318
+            }
+          ]
+        },
+        {
+          "name": "home",
+          "value": 289
+        },
+        {
+          "name": "architecture",
+          "value": 342,
+          "children": [
+            {
+              "name": "town_planning",
+              "value": 797
+            },
+            {
+              "name": "buildings",
+              "value": 973
+            },
+            {
+              "name": "furniture",
+              "value": 510
+            }
+          ]
+        },
+        {
+          "name": "computer_science",
+          "value": 621
+        },
+        {
+          "name": "engineering",
+          "value": 196,
+          "children": [
+            {
+              "name": "mechanics",
+              "value": 469
+            },
+            {
+              "name": "astronautics",
+              "value": 163
+            },
+            {
+              "name": "electrotechnology",
+              "value": 160
+            },
+            {
+              "name": "hydraulics",
+              "value": 294
+            }
+          ]
+        },
+        {
+          "name": "telecommunication",
+          "value": 225,
+          "children": [
+            {
+              "name": "post",
+              "value": 252
+            },
+            {
+              "name": "telegraphy",
+              "value": 132
+            },
+            {
+              "name": "telephony",
+              "value": 191
+            }
+          ]
+        },
+        {
+          "name": "medicine",
+          "value": 1969,
+          "children": [
+            {
+              "name": "dentistry",
+              "value": 297
+            },
+            {
+              "name": "pharmacy",
+              "value": 930
+            },
+            {
+              "name": "psychiatry",
+              "value": 277
+            },
+            {
+              "name": "radiology",
+              "value": 193
+            },
+            {
+              "name": "surgery",
+              "value": 285
+            }
+          ]
+        },
+        {
+          "name": "metrology",
+          "value": 677
+        }
+      ]
+    },
+    {
+      "name": "pure_science",
+      "value": 279,
+      "children": [
+        {
+          "name": "astronomy",
+          "value": 477
+        },
+        {
+          "name": "biology",
+          "value": 1908,
+          "children": [
+            {
+              "name": "biochemistry",
+              "value": 384
+            },
+            {
+              "name": "anatomy",
+              "value": 1727
+            },
+            {
+              "name": "physiology",
+              "value": 551
+            },
+            {
+              "name": "genetics",
+              "value": 399
+            }
+          ]
+        },
+        {
+          "name": "animals",
+          "value": 4604,
+          "children": [
+            {
+              "name": "entomology",
+              "value": 1218
+            }
+          ]
+        },
+        {
+          "name": "plants",
+          "value": 5033
+        },
+        {
+          "name": "environment",
+          "value": 325
+        },
+        {
+          "name": "chemistry",
+          "value": 1684
+        },
+        {
+          "name": "earth",
+          "value": 208,
+          "children": [
+            {
+              "name": "geology",
+              "value": 909
+            },
+            {
+              "name": "meteorology",
+              "value": 367
+            },
+            {
+              "name": "oceanography",
+              "value": 223
+            },
+            {
+              "name": "paleontology",
+              "value": 131
+            },
+            {
+              "name": "geography",
+              "value": 1189,
+              "children": [
+                {
+                  "name": "topography",
+                  "value": 256
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mathematics",
+          "value": 525,
+          "children": [
+            {
+              "name": "geometry",
+              "value": 393
+            },
+            {
+              "name": "statistics",
+              "value": 251
+            },
+            {
+              "name": "number",
+              "value": 326
+            }
+          ]
+        },
+        {
+          "name": "physics",
+          "value": 809,
+          "children": [
+            {
+              "name": "acoustics",
+              "value": 346
+            },
+            {
+              "name": "atomic_physic",
+              "value": 280
+            },
+            {
+              "name": "electricity",
+              "value": 259,
+              "children": [
+                {
+                  "name": "electronics",
+                  "value": 251
+                }
+              ]
+            },
+            {
+              "name": "gas",
+              "value": 171
+            },
+            {
+              "name": "optics",
+              "value": 342
+            }
+          ]
+        },
+        {
+          "name": "color",
+          "value": 558
+        }
+      ]
+    },
+    {
+      "name": "social_science",
+      "value": 212,
+      "children": [
+        {
+          "name": "anthropology",
+          "value": 475,
+          "children": [
+            {
+              "name": "ethnology",
+              "value": 193,
+              "children": [
+                {
+                  "name": "folklore",
+                  "value": 183
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "health",
+          "value": 229,
+          "children": [
+            {
+              "name": "body_care",
+              "value": 365
+            }
+          ]
+        },
+        {
+          "name": "military",
+          "value": 1012
+        },
+        {
+          "name": "pedagogy",
+          "value": 359,
+          "children": [
+            {
+              "name": "school",
+              "value": 351
+            },
+            {
+              "name": "university",
+              "value": 279
+            }
+          ]
+        },
+        {
+          "name": "publishing",
+          "value": 546
+        },
+        {
+          "name": "sociology",
+          "value": 658
+        },
+        {
+          "name": "artisanship",
+          "value": 309
+        },
+        {
+          "name": "commerce",
+          "value": 595
+        },
+        {
+          "name": "industry",
+          "value": 752
+        },
+        {
+          "name": "transport",
+          "value": 679,
+          "children": [
+            {
+              "name": "aviation",
+              "value": 266
+            },
+            {
+              "name": "vehicles",
+              "value": 218
+            },
+            {
+              "name": "nautical",
+              "value": 611
+            },
+            {
+              "name": "railway",
+              "value": 218
+            }
+          ]
+        },
+        {
+          "name": "economy",
+          "value": 666,
+          "children": [
+            {
+              "name": "enterprise",
+              "value": 378,
+              "children": [
+                {
+                  "name": "book_keeping",
+                  "value": 211
+                }
+              ]
+            },
+            {
+              "name": "finance",
+              "value": 241,
+              "children": [
+                {
+                  "name": "banking",
+                  "value": 258
+                },
+                {
+                  "name": "money",
+                  "value": 722
+                },
+                {
+                  "name": "exchange",
+                  "value": 316
+                }
+              ]
+            },
+            {
+              "name": "insurance",
+              "value": 234
+            },
+            {
+              "name": "tax",
+              "value": 239
+            }
+          ]
+        },
+        {
+          "name": "administration",
+          "value": 1118
+        },
+        {
+          "name": "law",
+          "value": 1323
+        },
+        {
+          "name": "politics",
+          "value": 982,
+          "children": [
+            {
+              "name": "diplomacy",
+              "value": 231
+            }
+          ]
+        },
+        {
+          "name": "tourism",
+          "value": 542
+        },
+        {
+          "name": "fashion",
+          "value": 882
+        },
+        {
+          "name": "sexuality",
+          "value": 428
+        },
+        {
+          "name": "social",
+          "value": 180
+        },
+        {
+          "name": "person",
+          "value": 1679
+        },
+        {
+          "name": "quality",
+          "value": 451
+        }
+      ]
+    },
+    {
+      "name": "time_period",
+      "value": 710
+    }
+  ]
+}

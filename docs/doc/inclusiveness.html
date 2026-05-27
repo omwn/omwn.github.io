@@ -1,0 +1,223 @@
+<html>
+
+<head>
+    <title>Concept Inclusiveness</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Documentation for the concept inclusiveness measure over WordNet synsets">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	  crossorigin="anonymous">
+
+  <link href="../static/css/home.css" rel="stylesheet">
+<style>
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1em;
+  font-size: 0.88em;
+  overflow-x: auto;
+}
+code { font-size: 0.9em; }
+.formula {
+  text-align: center;
+  font-size: 1.1em;
+  margin: 1em 0;
+  font-family: serif;
+}
+</style>
+
+</head>
+
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"><img width=50
+					   src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+
+	      <a href="../index.html"
+		 class="nav-item nav-link">Overview</a>
+
+	      <a href="../omw1.html"
+		 class="nav-item nav-link">OMW v1</a>
+
+	      <a href="../omw2.html"
+		 class="nav-item nav-link">OMW v2</a>
+
+	      <a href="../news.html"
+		 class="nav-item nav-link">News</a>
+
+	      <a href="../docs.html"
+		 class="nav-item nav-link">Documentation</a>
+
+	    </div>
+	</div>
+      </div>
+  </nav>
+</header>
+  <div class="column">
+
+    <div class="container">
+        <h1>Concept Inclusiveness</h1>
+
+	<p><b>Inclusiveness</b> measures how broadly a concept
+	  generalises within the WordNet noun hierarchy.  It was
+	  introduced by
+	  <a href="https://doi.org/10.1007/s10936-016-9459-6">Iliev
+	  &amp; Axelrod (2017)</a> to study the precision versus
+	  concreteness trade-off in language, and provides a
+	  finer-grained view of generality than raw depth in the
+	  hierarchy.
+
+	<h2>Definition</h2>
+
+	<p>For a noun synset <i>c</i> that has <i>n</i> unique
+	  descendants (both direct and indirect hyponyms) among
+	  <i>N</i> total noun synsets in the wordnet:
+
+	<div class="formula">
+	  inclusiveness(<i>c</i>) = &minus;log&thinsp;<big>(</big>(<i>n</i>&thinsp;+&thinsp;1)&thinsp;/&thinsp;<i>N</i><big>)</big>
+	</div>
+
+	<p>The &ldquo;+1&rdquo; avoids a zero in the numerator for
+	  leaf nodes (concepts with no hyponyms).  The negation of the
+	  logarithm means:
+
+	<ul>
+	  <li><b>Low inclusiveness</b> (near 0) &mdash; the concept
+	    subsumes almost the entire hierarchy (e.g., <i>entity</i>,
+	    <i>object</i>).
+	  <li><b>High inclusiveness</b> &mdash; the concept is highly
+	    specific, with few or no hyponyms (e.g., <i>labrador
+	    retriever</i>, <i>aspirin</i>).
+	</ul>
+
+	<p>Inclusiveness differs from hierarchy <b>depth</b> because
+	  depth measures how far down a concept sits, while
+	  inclusiveness measures how much of the hierarchy it covers.
+	  A concept at depth 5 may still be highly inclusive if it has
+	  thousands of descendants.
+
+	<h2>Computing inclusiveness</h2>
+
+	<p>The script below computes inclusiveness for all noun
+	  synsets in any wordnet loaded via the
+	  <a href="https://wn.readthedocs.io/"><tt>wn</tt> Python
+	  library</a>.  Run it with
+	  <a href="https://docs.astral.sh/uv/"><tt>uv run
+	  inclusiveness.py</tt></a>.
+
+<pre>#!/usr/bin/env python3
+# /// script
+# requires-python = "&gt;=3.10"
+# dependencies = [
+#   "wn&gt;=1.1",
+# ]
+# ///
+"""Compute concept inclusiveness for all noun synsets in a wordnet."""
+
+import math
+import wn
+
+wn.download("omw-en:1.4")   # skipped if already present
+my_wn = wn.Wordnet(lexicon="omw-en:1.4")
+
+noun_synsets = my_wn.synsets(pos="n")
+
+# Build hyponym adjacency list
+str_hyponyms: dict[str, list[str]] = {
+    ss.id: [h.id for h in ss.hyponyms()] for ss in noun_synsets
+}
+ids = list(str_hyponyms.keys())
+idx = {ss_id: i for i, ss_id in enumerate(ids)}
+children = [
+    [idx[h] for h in str_hyponyms[ss_id] if h in idx] for ss_id in ids
+]
+N = len(ids)
+
+# Count descendants via BFS/DFS for each synset
+def count_descendants(i: int) -> int:
+    visited: set[int] = set()
+    stack = children[i][:]
+    while stack:
+        j = stack.pop()
+        if j not in visited:
+            visited.add(j)
+            stack.extend(children[j])
+    return len(visited)
+
+inclusiveness = {
+    ids[i]: -math.log((count_descendants(i) + 1) / N)
+    for i in range(N)
+}
+
+# Example output: look up a word
+for ss in my_wn.words("dog", pos="n")[0].synsets():
+    score = inclusiveness.get(ss.id)
+    if score is not None:
+        print(f"{ss.id}  inclusiveness={score:.3f}  {ss.definitions()[0]}")
+</pre>
+
+	<p>The computation visits each synset's descendant subgraph, so
+	  it takes a few minutes for large wordnets (~80,000 noun
+	  synsets).  Cache the result as JSON if you need it
+	  repeatedly:
+
+<pre>import json, math
+from pathlib import Path
+
+cache = Path("inclusiveness.json")
+if cache.exists():
+    inclusiveness = json.loads(cache.read_text())
+else:
+    # ... run the computation above ...
+    cache.write_text(json.dumps(inclusiveness))
+</pre>
+
+	<h2>Relationship to Information Content</h2>
+
+	<p>Inclusiveness is related to, but distinct from,
+	  <b>Information Content (IC)</b>.  IC is corpus-based: it
+	  measures how rarely a synset (and its hyponyms) appears in a
+	  large corpus, using the formula
+	  &minus;log(<i>P</i>(<i>c</i>)).  Inclusiveness is purely
+	  structural: it counts hyponym coverage in the ontology,
+	  without any corpus.  The two measures are correlated — rare,
+	  specific concepts tend to appear less in corpora — but
+	  inclusiveness has the advantage of requiring no corpus and
+	  being computable for any wordnet regardless of language.
+
+	<h2>References</h2>
+
+	<ul>
+	  <li>Rumen Iliev and Robert Axelrod (2017).
+	    <a href="https://doi.org/10.1007/s10936-016-9459-6">The
+	    Paradox of Abstraction: Precision Versus Concreteness.</a>
+	    <i>Journal of Psycholinguistic Research</i>, 46, 715&ndash;729.
+
+</ul>
+
+<hr>
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond </a>
+</address>
+
+<p>Source code hosted at <a href='https://github.com/omwn/omwn.github.io'>https://github.com/omwn/omwn.github.io</a>.
+
+ <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </div>
+
+</body>
+</html>

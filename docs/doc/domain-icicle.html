@@ -1,0 +1,318 @@
+<html>
+<head>
+    <title>WordNet Domain Icicle</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Interactive icicle chart of XWND domain hierarchy in WordNet noun synsets">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link href="../static/css/home.css" rel="stylesheet">
+    <style>
+      #chart { width: 100%; margin-top: 1rem; }
+      svg { display: block; width: 100%; }
+      .cell rect {
+        stroke: #fff;
+        stroke-width: 0.5px;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      .cell rect:hover { opacity: 0.8; }
+      .cell text {
+        font-family: sans-serif;
+        font-size: 11px;
+        fill: #fff;
+        text-shadow: 0 0 3px rgba(0,0,0,0.6);
+        pointer-events: none;
+        dominant-baseline: hanging;
+      }
+      #tooltip {
+        position: fixed;
+        background: rgba(0,0,0,0.82);
+        color: #fff;
+        padding: 7px 11px;
+        border-radius: 5px;
+        font-size: 13px;
+        font-family: sans-serif;
+        pointer-events: none;
+        display: none;
+        z-index: 100;
+        max-width: 280px;
+        line-height: 1.5;
+      }
+      #breadcrumb {
+        font-family: sans-serif;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #444;
+        min-height: 1.4em;
+      }
+      #breadcrumb span { cursor: pointer; color: #0366d6; }
+      #breadcrumb span:hover { text-decoration: underline; }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-family: sans-serif;
+        font-size: 13px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .legend-swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+    </style>
+</head>
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand"><img width=50 src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+      <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+          <a href="../index.html" class="nav-item nav-link">Overview</a>
+          <a href="../omw1.html" class="nav-item nav-link">OMW v1</a>
+          <a href="../omw2.html" class="nav-item nav-link">OMW v2</a>
+          <a href="../news.html" class="nav-item nav-link">News</a>
+          <a href="../docs.html" class="nav-item nav-link">Documentation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="column">
+  <div class="container">
+    <h1>WordNet Domain Icicle</h1>
+
+    <p>Each column is one level of the
+      <a href="domains.html">XWND domain hierarchy</a>, reading
+      left to right from root to leaves.
+      Height is proportional to the number of noun synsets assigned to
+      that domain (including all descendants).
+      Colour indicates the top-level branch.
+      <b>Click any cell to zoom in</b>; click the root bar or breadcrumb
+      to zoom back out.
+      Also available as a <a href="domain-treemap.html">treemap</a>.
+
+    <div class="legend" id="legend"></div>
+    <div id="breadcrumb"></div>
+    <div id="chart"><svg id="svg"></svg></div>
+    <div id="tooltip"></div>
+
+    <p style="font-size:12px;color:#666;margin-top:6px;">
+      Data: 82,115 noun synsets from <tt>omw-en:1.4</tt> mapped to
+      <a href="../static/data/ili_domains.tsv">ili_domains.tsv</a>.
+      Hierarchy from WordNet Domains 3.2
+      (<a href="https://doi.org/10.2139/ssrn.228464">Magnini &amp; Cavaglià 2000</a>)
+      extended by XWND
+      (<a href="https://doi.org/10.1007/978-3-642-28604-9_2">González et al. 2012</a>).
+      <a href="https://github.com/bond-lab/JPC1">JPC1 project</a>.
+
+  </div>
+</div>
+
+<script>
+const PALETTE = {
+  factotum:        "#888888",
+  humanities:      "#e06c3a",
+  free_time:       "#3a9e6a",
+  applied_science: "#3a7abf",
+  pure_science:    "#9b59b6",
+  social_science:  "#c0a020",
+};
+const LABELS = {
+  factotum:        "Factotum",
+  humanities:      "Humanities",
+  free_time:       "Free Time",
+  applied_science: "Applied Science",
+  pure_science:    "Pure Science",
+  social_science:  "Social Science",
+};
+
+const COL_WIDTH = 120;  // fixed width per depth level
+const SVG_HEIGHT = 620;
+const PAD = 1;
+
+function fmt(n) { return n.toLocaleString(); }
+function lbl(name) { return name.replace(/_/g, " "); }
+
+function topColor(node) {
+  let n = node;
+  while (n.depth > 1) n = n.parent;
+  const key = n.depth === 1 ? n.data.name : "factotum";
+  return PALETTE[key] || PALETTE.factotum;
+}
+
+function lighten(hex, amount) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  const mix = v => Math.round(v + (255-v)*amount);
+  return `rgb(${mix(r)},${mix(g)},${mix(b)})`;
+}
+
+const tooltip = document.getElementById("tooltip");
+const breadEl = document.getElementById("breadcrumb");
+const svgEl   = document.getElementById("svg");
+
+let globalRoot, currentFocus;
+let yScale;  // maps value fraction (x0..x1) → vertical pixels
+
+function buildPartition(data) {
+  return d3.hierarchy(data)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+}
+
+function initScales(root, focusNode) {
+  const totalDepth = root.height + 1;
+  const svgWidth = totalDepth * COL_WIDTH;
+  svgEl.setAttribute("viewBox", `0 0 ${svgWidth} ${SVG_HEIGHT}`);
+  svgEl.setAttribute("height", SVG_HEIGHT);
+  svgEl.setAttribute("width", "100%");
+
+  // vertical scale: zoom to focusNode's value slice
+  yScale = d3.scaleLinear()
+    .domain([focusNode.x0, focusNode.x1])
+    .range([0, SVG_HEIGHT]);
+}
+
+function render(root, focusNode) {
+  currentFocus = focusNode;
+  initScales(root, focusNode);
+
+  d3.select(svgEl).selectAll("g.cell").remove();
+
+  const cell = d3.select(svgEl)
+    .selectAll("g.cell")
+    .data(root.descendants())
+    .join("g")
+      .attr("class", "cell")
+      .attr("transform", d => `translate(${d.depth * COL_WIDTH}, ${yScale(d.x0)})`);
+
+  cell.append("rect")
+    .attr("width",  COL_WIDTH - PAD)
+    .attr("height", d => Math.max(0, yScale(d.x1) - yScale(d.x0) - PAD))
+    .attr("fill", d => lighten(topColor(d), d.depth * 0.06))
+    .attr("opacity", d => {
+      if (d.x1 <= focusNode.x0 || d.x0 >= focusNode.x1) return 0;
+      if (d.depth < focusNode.depth) return 0.3;
+      return 1;
+    });
+
+  cell.append("text")
+    .attr("x", 4)
+    .attr("y", 4)
+    .attr("dominant-baseline", "hanging")
+    .text(d => {
+      const h = yScale(d.x1) - yScale(d.x0);
+      if (h < 12) return "";
+      const name = lbl(d.data.name);
+      const chars = Math.floor((COL_WIDTH - 8) / 6.5);
+      return name.length > chars ? name.slice(0, Math.max(1, chars - 1)) + "…" : name;
+    });
+
+  cell.on("click", (ev, d) => {
+    ev.stopPropagation();
+    zoomTo(d);
+  });
+
+  cell.on("mousemove", (ev, d) => {
+    const path = d.ancestors().reverse().map(n => lbl(n.data.name));
+    tooltip.innerHTML =
+      `<b>${lbl(d.data.name)}</b><br>` +
+      `${fmt(d.value)} synsets` +
+      (d.value !== d.data.value && d.data.value > 0
+        ? ` (${fmt(d.data.value)} direct)` : "") +
+      `<br><small>${path.join(" › ")}</small>`;
+    tooltip.style.display = "block";
+    tooltip.style.left = (ev.clientX + 14) + "px";
+    tooltip.style.top  = (ev.clientY + 14) + "px";
+  }).on("mouseleave", () => { tooltip.style.display = "none"; });
+
+  updateBreadcrumb(focusNode);
+}
+
+function zoomTo(node) {
+  render(globalRoot, node);
+}
+
+svgEl.addEventListener("click", () => {
+  if (currentFocus !== globalRoot) {
+    zoomTo(currentFocus.parent || globalRoot);
+  }
+});
+
+function updateBreadcrumb(node) {
+  const path = node.ancestors().reverse();
+  breadEl.innerHTML = path.map((n, i) => {
+    const t = lbl(n.data.name);
+    if (i === path.length - 1) return t;
+    return `<span data-name="${n.data.name}">${t}</span>`;
+  }).join(" › ");
+  breadEl.querySelectorAll("span[data-name]").forEach(el => {
+    el.addEventListener("click", () => {
+      const target = globalRoot.descendants().find(d => d.data.name === el.dataset.name);
+      if (target) zoomTo(target);
+    });
+  });
+}
+
+function buildLegend() {
+  const legEl = document.getElementById("legend");
+  Object.entries(LABELS).forEach(([key, label]) => {
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.title = `Zoom to ${label}`;
+    item.innerHTML = `<div class="legend-swatch" style="background:${PALETTE[key]}"></div>${label}`;
+    item.addEventListener("click", () => {
+      const target = globalRoot.descendants().find(d => d.data.name === key);
+      if (target) zoomTo(target);
+    });
+    legEl.appendChild(item);
+  });
+}
+
+// load D3 then data
+const d3script = document.createElement("script");
+d3script.src = "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js";
+d3script.onload = () => {
+  fetch("../static/data/domain_hierarchy.json")
+    .then(r => r.json())
+    .then(data => {
+      globalRoot = buildPartition(data);
+      d3.partition().size([1, 1])(globalRoot);  // x0/x1 in [0,1], y0/y1 unused
+
+      buildLegend();
+      render(globalRoot, globalRoot);
+
+      let timer;
+      window.addEventListener("resize", () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => render(globalRoot, currentFocus), 150);
+      });
+    });
+};
+document.head.appendChild(d3script);
+</script>
+
+<hr>
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond</a>
+</address>
+<p>Source code hosted at <a href='https://github.com/omwn/omwn.github.io'>https://github.com/omwn/omwn.github.io</a>.
+</div>
+</body>
+</html>

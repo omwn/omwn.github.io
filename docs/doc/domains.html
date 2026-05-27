@@ -1,0 +1,266 @@
+<html>
+
+<head>
+    <title>WordNet Domains (XWND)</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Documentation for eXtended WordNet Domains (XWND) mapped to ILI">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	  crossorigin="anonymous">
+
+  <link href="../static/css/home.css" rel="stylesheet">
+<style>
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1em;
+  font-size: 0.88em;
+  overflow-x: auto;
+}
+code { font-size: 0.9em; }
+</style>
+
+</head>
+
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"><img width=50
+					   src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+
+	      <a href="../index.html"
+		 class="nav-item nav-link">Overview</a>
+
+	      <a href="../omw1.html"
+		 class="nav-item nav-link">OMW v1</a>
+
+	      <a href="../omw2.html"
+		 class="nav-item nav-link">OMW v2</a>
+
+	      <a href="../news.html"
+		 class="nav-item nav-link">News</a>
+
+	      <a href="../docs.html"
+		 class="nav-item nav-link">Documentation</a>
+
+	    </div>
+	</div>
+      </div>
+  </nav>
+</header>
+  <div class="column">
+
+    <div class="container">
+        <h1>WordNet Domains (XWND)</h1>
+
+	<p>This page documents how subject-domain labels from
+	  <b>eXtended WordNet Domains (XWND)</b> can be used with the
+	  Open Multilingual Wordnet.  Domain labels are mapped to the
+	  <a href="https://globalwordnet.github.io/ili/">Interlingual
+	  Index (ILI)</a> so that they apply across all wordnets that
+	  share ILI entries.
+
+	<h2>Background</h2>
+
+	<p><b>WordNet Domains (WND)</b>
+	  <a href="https://doi.org/10.2139/ssrn.228464">(Magnini &amp;
+	  Cavaglià, 2000)</a> is a manually constructed resource that
+	  assigns each Princeton WordNet synset one or more labels from
+	  a hierarchy of 170 subject-domain labels derived from the
+	  Dewey Decimal Classification (e.g., <i>medicine</i>,
+	  <i>sport</i>, <i>gastronomy</i>).  The 170 domains are
+	  organized into a hierarchy: <i>sport</i> is a subdomain
+	  of <i>factotum</i>, <i>gastronomy</i> of <i>food</i>, and
+	  so on.
+
+	<p><b>eXtended WordNet Domains (XWND)</b>
+	  <a href="https://doi.org/10.1007/978-3-642-28604-9_2">(González,
+	  Rigau &amp; Castillo, 2012)</a> propagates these labels to
+	  <em>all</em> WordNet 3.0 synsets using the UKB graph-based
+	  algorithm over the WordNet relation graph enriched with gloss
+	  relations, and provides a confidence score for each domain
+	  assignment.  This gives 82,115 noun synsets a primary domain
+	  label, compared to partial coverage in the original WND.
+
+	<p>We assign each synset its <b>highest-scoring domain</b> as
+	  its primary label.  The XWND data and this mapping were used
+	  in the analysis of metaphor and metonymy reported in the
+	  <a href="https://github.com/bond-lab/JPC1">JPC1 project</a>.
+
+	<h2>Why domains differ from topics</h2>
+
+	<p>WordNet <a href="topics.html">topics</a> (lexicographer
+	  files / supersenses) are editorial labels assigned by the
+	  WordNet team to organise their work — they group polysemous
+	  senses that share a broad field.  XWND domains, by contrast,
+	  are derived from the Dewey Decimal Classification and capture
+	  <em>subject matter</em> rather than lexicographic structure.
+	  The two systems partition the lexicon very differently.  For
+	  example, the topic <tt>noun.cognition</tt> covers all
+	  mental-state nouns regardless of their subject domain, while
+	  the XWND domain <tt>psychology</tt> groups nouns by their
+	  academic field.
+
+	<p>An <a href="domain-treemap.html"><b>interactive treemap</b></a>
+	  of all 170 domains — sized by synset count and coloured by
+	  top-level branch — is available on a separate page.  Click
+	  any rectangle to zoom in.
+
+	<h2>Download</h2>
+
+	<p>A precomputed tab-separated file mapping ILI to
+	  highest-weight XWND domain is available here:
+
+	<p><a href="../static/data/ili_domains.tsv"><b>ili_domains.tsv</b></a>
+	  (ILI &rarr; domain, 82,115 noun synsets, tab-separated with header)
+
+	<p>Format:
+<pre>ILI	domain
+i100000	plants
+i100001	biology
+i100002	plants
+…</pre>
+
+	<h2>Generating the mapping yourself</h2>
+
+	<p>The script below downloads the XWND data from the
+	  <a href="https://github.com/bond-lab/JPC1">JPC1 repository</a>,
+	  loads <tt>omw-en:1.4</tt> via the
+	  <a href="https://wn.readthedocs.io/"><tt>wn</tt> Python
+	  library</a>, selects the highest-scoring domain per synset,
+	  and writes the result as a tab-separated file.  Run it with
+	  <a href="https://docs.astral.sh/uv/"><tt>uv run
+	  get_domains.py</tt></a> (no separate install step needed).
+
+<pre>#!/usr/bin/env python3
+# /// script
+# requires-python = "&gt;=3.10"
+# dependencies = [
+#   "wn&gt;=1.1",
+# ]
+# ///
+"""Map XWND domains to ILI and write a tab-separated file."""
+
+import tarfile
+import urllib.request
+from pathlib import Path
+import wn
+
+XWND_URL = "https://github.com/bond-lab/JPC1/raw/main/tasks/wordnet/xwnd-30g.tgz"
+XWND_DIR = Path("xwnd-30g")
+OUT_TSV  = Path("ili_domains.tsv")
+
+# --- download and extract XWND if needed ---
+if not XWND_DIR.exists():
+    print("Downloading XWND data...")
+    urllib.request.urlretrieve(XWND_URL, "xwnd-30g.tgz")
+    with tarfile.open("xwnd-30g.tgz") as tar:
+        tar.extractall(".")
+    print("Extracted.")
+
+# --- load highest-weight domain per synset from .ppv files ---
+best: dict[str, tuple[str, float]] = {}   # offset-pos -&gt; (domain, weight)
+for ppv_path in sorted(XWND_DIR.glob("*.ppv")):
+    domain = ppv_path.stem
+    with open(ppv_path) as f:
+        for line in f:
+            parts = line.split()
+            if len(parts) != 2:
+                continue
+            key, weight_str = parts
+            if not key.endswith("-n"):
+                continue
+            weight = float(weight_str)
+            prev = best.get(key)
+            if prev is None or weight &gt; prev[1]:
+                best[key] = (domain, weight)
+
+# offset-pos key (e.g. "00001740-n") -&gt; omw-en synset ID
+domains = {f"omw-en-{key}": dom for key, (dom, _) in best.items()}
+
+# --- map to ILI via the wn library ---
+wn.download("omw-en:1.4")           # skipped if already downloaded
+my_wn = wn.Wordnet(lexicon="omw-en:1.4")
+
+rows = []
+for ss in my_wn.synsets(pos="n"):
+    domain = domains.get(ss.id)
+    if domain and ss.ili:
+        rows.append((ss.ili, domain))
+rows.sort()
+
+with open(OUT_TSV, "w") as f:
+    f.write("ILI\tdomain\n")
+    for ili, domain in rows:
+        f.write(f"{ili}\t{domain}\n")
+
+print(f"Wrote {len(rows):,} rows to {OUT_TSV}")
+</pre>
+
+	<h2>Using the mapping in Python</h2>
+
+	<p>Once you have <tt>ili_domains.tsv</tt> (or generated it
+	  with the script above), you can use it with any wordnet that
+	  provides ILI entries:
+
+<pre>import wn
+
+# Load the mapping
+domains: dict[str, str] = {}
+with open("ili_domains.tsv") as f:
+    next(f)  # skip header
+    for line in f:
+        ili, domain = line.rstrip("\n").split("\t")
+        domains[ili] = domain
+
+# Look up the domain for a word
+my_wn = wn.Wordnet(lexicon="omw-en:1.4")
+for ss in my_wn.words("dog", pos="n")[0].synsets():
+    print(ss.ili, domains.get(ss.ili, "—"), ss.definitions()[0])
+</pre>
+
+	<h2>References</h2>
+
+	<ul>
+	  <li>Bernardo Magnini and Gabriela Cavaglià (2000).
+	    <a href="https://doi.org/10.2139/ssrn.228464">Integrating
+	    Subject Field Codes into WordNet.</a>
+	    <i>Proceedings of LREC 2000</i>, Athens, Greece.
+
+	  <li>Aitor González, German Rigau, and Mauro Castillo (2012).
+	    <a href="https://doi.org/10.1007/978-3-642-28604-9_2">A
+	    graph-based method to improve WordNet Domains.</a>
+	    <i>Proceedings of CICLing 2012</i>, New Delhi, India.
+	    Springer.
+
+	  <li>Francis Bond and collaborators.
+	    <a href="https://github.com/bond-lab/JPC1">JPC1: Japanese
+	    Poetic Concepts — metaphor and metonymy analysis using
+	    WordNet.</a>
+	</ul>
+
+<hr>
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond </a>
+</address>
+
+<p>Source code hosted at <a href='https://github.com/omwn/omwn.github.io'>https://github.com/omwn/omwn.github.io</a>.
+
+ <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </div>
+
+</body>
+</html>

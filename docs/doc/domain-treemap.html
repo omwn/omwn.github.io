@@ -1,0 +1,374 @@
+<html>
+<head>
+    <title>WordNet Domain Treemap</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Interactive treemap of XWND domain coverage in WordNet noun synsets">
+    <link rel="shortcut icon" href="../static/img/omw.ico"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link href="../static/css/home.css" rel="stylesheet">
+    <style>
+      #chart {
+        width: 100%;
+        height: 700px;
+        position: relative;
+        margin-top: 1rem;
+      }
+      .cell {
+        position: absolute;
+        box-sizing: border-box;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.5);
+      }
+      .cell-label {
+        font-size: 11px;
+        font-family: sans-serif;
+        padding: 3px 4px;
+        color: #fff;
+        text-shadow: 0 0 3px rgba(0,0,0,0.7);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        line-height: 1.2;
+      }
+      .cell-count {
+        font-size: 10px;
+        opacity: 0.85;
+        display: block;
+      }
+      .cell:hover {
+        border: 2px solid #fff;
+        z-index: 10;
+        cursor: pointer;
+      }
+      #tooltip {
+        position: fixed;
+        background: rgba(0,0,0,0.82);
+        color: #fff;
+        padding: 7px 11px;
+        border-radius: 5px;
+        font-size: 13px;
+        font-family: sans-serif;
+        pointer-events: none;
+        display: none;
+        z-index: 100;
+        max-width: 260px;
+        line-height: 1.5;
+      }
+      #breadcrumb {
+        font-family: sans-serif;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #444;
+      }
+      #breadcrumb span { cursor: pointer; color: #0366d6; }
+      #breadcrumb span:hover { text-decoration: underline; }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-family: sans-serif;
+        font-size: 13px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .legend-swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+    </style>
+</head>
+<body class="container" bgcolor="#ddeeff">
+<header>
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand"><img width=50 src="../static/img/omw-logo.svg"/> Open Multilingual Wordnet</a>
+      <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+          <a href="../index.html" class="nav-item nav-link">Overview</a>
+          <a href="../omw1.html" class="nav-item nav-link">OMW v1</a>
+          <a href="../omw2.html" class="nav-item nav-link">OMW v2</a>
+          <a href="../news.html" class="nav-item nav-link">News</a>
+          <a href="../docs.html" class="nav-item nav-link">Documentation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="column">
+  <div class="container">
+    <h1>WordNet Domain Treemap</h1>
+
+    <p>Each rectangle represents an
+      <a href="domains.html">XWND domain</a>, sized by the number of
+      noun synsets assigned to it.  Colour indicates the top-level branch
+      of the <a href="https://doi.org/10.1007/978-3-642-28604-9_2">domain
+      hierarchy</a>.  <b>Click any rectangle to zoom in</b>;
+      click the breadcrumb or the background to zoom back out.
+      Also available as an <a href="domain-icicle.html">icicle chart</a>.
+
+    <div class="legend" id="legend"></div>
+    <div id="breadcrumb"></div>
+    <div id="chart"></div>
+    <div id="tooltip"></div>
+
+    <p style="font-size:12px;color:#666;margin-top:6px;">
+      Data: 82,115 noun synsets from <tt>omw-en:1.4</tt> mapped to
+      <a href="../static/data/ili_domains.tsv">ili_domains.tsv</a>.
+      Hierarchy from WordNet Domains 3.2
+      (<a href="https://doi.org/10.2139/ssrn.228464">Magnini &amp; Cavaglià 2000</a>)
+      extended by XWND
+      (<a href="https://doi.org/10.1007/978-3-642-28604-9_2">González et al. 2012</a>).
+      <a href="https://github.com/bond-lab/JPC1">JPC1 project</a>.
+
+  </div>
+</div>
+
+<script>
+// ── palette: one colour per top-level branch ─────────────────────────
+const PALETTE = {
+  factotum:       "#888888",
+  humanities:     "#e06c3a",
+  free_time:      "#3a9e6a",
+  applied_science:"#3a7abf",
+  pure_science:   "#9b59b6",
+  social_science: "#c0a020",
+};
+
+const LABELS = {
+  factotum:       "Factotum",
+  humanities:     "Humanities",
+  free_time:      "Free Time",
+  applied_science:"Applied Science",
+  pure_science:   "Pure Science",
+  social_science: "Social Science",
+};
+
+// ── helpers ──────────────────────────────────────────────────────────
+function fmt(n) { return n.toLocaleString(); }
+function label(name) { return name.replace(/_/g, " "); }
+
+// Assign colour based on ancestor in top-level branch
+function topLevel(node) {
+  let n = node;
+  while (n.depth > 1) n = n.parent;
+  return n.depth === 1 ? n.data.name : "factotum";
+}
+
+// ── treemap layout ───────────────────────────────────────────────────
+function buildTreemap(data, w, h) {
+  const root = d3.hierarchy(data)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap()
+    .size([w, h])
+    .paddingOuter(3)
+    .paddingTop(0)
+    .paddingInner(1)
+    .round(true)(root);
+
+  return root;
+}
+
+// ── render ───────────────────────────────────────────────────────────
+let currentRoot;
+let globalRoot;
+const chart   = document.getElementById("chart");
+const tooltip = document.getElementById("tooltip");
+const breadEl = document.getElementById("breadcrumb");
+
+function render(node) {
+  currentRoot = node;
+  chart.innerHTML = "";
+
+  const w = chart.clientWidth;
+  const h = chart.clientHeight;
+
+  // Re-layout using only this subtree
+  const root = buildTreemap(node.data, w, h);
+
+  // Annotate colour (use stored top-level from original tree if available)
+  // For re-rooted subtrees we derive from the original node's colour.
+  const rootColor = node._topColor || PALETTE[node.data.name] || PALETTE.factotum;
+
+  function renderNode(d, parentColor) {
+    const color = d.depth === 0
+      ? "transparent"
+      : d.depth === 1
+        ? (PALETTE[d.data.name] || parentColor)
+        : parentColor;
+
+    if (d.depth === 0) {
+      // recurse into children
+      (d.children || []).forEach(c => renderNode(c, rootColor));
+      return;
+    }
+
+    const el = document.createElement("div");
+    el.className = "cell";
+    const dw = d.x1 - d.x0;
+    const dh = d.y1 - d.y0;
+    el.style.left   = d.x0 + "px";
+    el.style.top    = d.y0 + "px";
+    el.style.width  = dw + "px";
+    el.style.height = dh + "px";
+    el.style.background = color;
+
+    if (dw > 18 && dh > 14) {
+      const lbl = document.createElement("div");
+      lbl.className = "cell-label";
+      lbl.textContent = label(d.data.name);
+      if (dh > 26) {
+        const cnt = document.createElement("span");
+        cnt.className = "cell-count";
+        cnt.textContent = fmt(d.value);
+        lbl.appendChild(cnt);
+      }
+      el.appendChild(lbl);
+    }
+
+    // hover tooltip
+    el.addEventListener("mousemove", ev => {
+      const path = [];
+      let n = d; while (n) { path.unshift(label(n.data.name)); n = n.parent; }
+      // remove the virtual root entry
+      path.shift();
+      tooltip.innerHTML =
+        `<b>${label(d.data.name)}</b><br>` +
+        `${fmt(d.value)} synsets` +
+        (d.value !== d.data.value && d.data.value > 0
+          ? ` (${fmt(d.data.value)} direct)`
+          : "") +
+        (path.length > 1 ? `<br><small>${path.join(" › ")}</small>` : "");
+      tooltip.style.display = "block";
+      tooltip.style.left = (ev.clientX + 12) + "px";
+      tooltip.style.top  = (ev.clientY + 12) + "px";
+    });
+    el.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
+
+    // click to zoom
+    el.addEventListener("click", ev => {
+      ev.stopPropagation();
+      if (d.children && d.children.length) {
+        // find the original node in globalRoot for colour
+        const orig = findNode(globalRoot, d.data.name);
+        if (orig) {
+          orig._topColor = d.depth === 1 ? color : currentRoot._topColor || color;
+          render(orig);
+        }
+      }
+    });
+
+    chart.appendChild(el);
+    // recurse into children (they appear on top)
+    (d.children || []).forEach(c => renderNode(c, color));
+  }
+
+  renderNode(root, rootColor);
+  updateBreadcrumb(node);
+}
+
+// Click background to zoom out
+chart.addEventListener("click", () => {
+  if (currentRoot !== globalRoot) {
+    const parent = findNode(globalRoot, currentRoot.parent
+      ? currentRoot.parent.data.name
+      : globalRoot.data.name);
+    render(parent || globalRoot);
+  }
+});
+
+function findNode(root, name) {
+  if (root.data.name === name) return root;
+  for (const c of (root.children || [])) {
+    const found = findNode(c, name);
+    if (found) return found;
+  }
+  return null;
+}
+
+function updateBreadcrumb(node) {
+  const path = [];
+  let n = node;
+  while (n) { path.unshift(n); n = n.parent; }
+  breadEl.innerHTML = path.map((n, i) => {
+    const lbl = label(n.data.name);
+    if (i === path.length - 1) return lbl;
+    return `<span onclick="zoomTo('${n.data.name}')">${lbl}</span>`;
+  }).join(" › ");
+}
+
+function zoomTo(name) {
+  const n = findNode(globalRoot, name);
+  if (n) render(n);
+}
+
+// ── legend ───────────────────────────────────────────────────────────
+function buildLegend() {
+  const legEl = document.getElementById("legend");
+  Object.entries(LABELS).forEach(([key, lbl]) => {
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.title = `Zoom to ${lbl}`;
+    item.innerHTML = `<div class="legend-swatch" style="background:${PALETTE[key]}"></div>${lbl}`;
+    item.addEventListener("click", () => {
+      const n = findNode(globalRoot, key);
+      if (n) render(n);
+    });
+    legEl.appendChild(item);
+  });
+}
+
+// ── load D3 then data ─────────────────────────────────────────────────
+const d3script = document.createElement("script");
+d3script.src = "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js";
+d3script.onload = () => {
+  fetch("../static/data/domain_hierarchy.json")
+    .then(r => r.json())
+    .then(data => {
+      // Build hierarchy once to get parent refs for zoom
+      globalRoot = d3.hierarchy(data)
+        .sum(d => d.value)
+        .sort((a, b) => b.value - a.value);
+
+      // Store top-level colour on each node
+      globalRoot.each(n => {
+        n._topColor = PALETTE[topLevel(n)] || PALETTE.factotum;
+      });
+
+      buildLegend();
+      render(globalRoot);
+
+      // Re-render on resize
+      let timer;
+      window.addEventListener("resize", () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => render(currentRoot), 150);
+      });
+    });
+};
+document.head.appendChild(d3script);
+</script>
+
+<hr>
+<address>
+  Maintainer: <a href='https://fcbond.github.io'>Francis Bond</a>
+</address>
+<p>Source code hosted at <a href='https://github.com/omwn/omwn.github.io'>https://github.com/omwn/omwn.github.io</a>.
+</div>
+</body>
+</html>
